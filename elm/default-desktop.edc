@@ -753,6 +753,8 @@ externals.external: "elm";
                 } \
             } \
 
+data.item: "version" "110";
+
 collections {
 
     group { name: "elm/scroller/base/default";

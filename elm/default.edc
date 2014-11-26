@@ -8,6 +8,8 @@
 
 externals.external: "elm";
 
+data.item: "version" "110";
+
 #define COLOR_LIST_BG        253 253 253 255
 #define COLOR_LIST_BG_ODD    240 245 250 255
 #define COLOR_LIST_BG_ACTIVE 138 171 225 255
