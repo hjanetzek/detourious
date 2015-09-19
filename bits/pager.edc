@@ -1,12 +1,13 @@
 
-
 group {
 #ifdef BUILD_COMPOSITE
 	data {
 		item: "shaped" "1";
+		/*item: "noshadow" "1";*/
 	}	
 #endif
 	name: "e/modules/pager/popup";
+	alias: "e/modules/pager16/popup";
 	parts {
 #ifdef BUILD_COMPOSITE
 		part {
@@ -16,8 +17,9 @@ group {
 				state: "default" 0.0;
 				image {
 					normal: "images/popup_round.png";
-					border: 18 18 18 21;
+					border: 7 7 7 8;
 				}
+				color_class: "dialog_base";
 			}
 		}
 
@@ -28,8 +30,8 @@ group {
 			description {
 				state: "default" 0.0;
 				visible: 0;
-				rel1.offset: 18 10;
-				rel2.offset: -19 -22;
+				rel1.offset: 4 1;
+				rel2.offset: -5 -9;
 			}
 		}
 
@@ -57,6 +59,7 @@ group {
 					border: 2 2 2 2;
 					middle: 1;
 				}
+				color_class: "dialog_base";
 			}
 		}
 
@@ -93,6 +96,7 @@ group {
 				}
 				TEXT_COLOR_BOLD;
 				TEXT_LARGE("winlist_title", 0.5 0.0, 1 1);
+				text.ellipsis: -1;
 			}
 		}
 
@@ -135,20 +139,21 @@ group {
 				image {
 					normal: "images/decoration_im1.png";
 				}
+				color_class: "dialog_base";
 			}
 		}
 	}
 }
+
 group {
 	name: "e/modules/pager/desk";
 	data {
-		item: "e/modules/pager/desk/apparence" "plain";
+		item: "e/modules/pager/desk/appearence" "plain";
 	}
-
-	images {
-		image: "images/pager_win_focused.png" COMP;
-		image: "images/pager_win_unfocused.png" COMP;
-	}
+   images.image: "images/mini_arrow_0.png" COMP;
+   images.image: "images/mini_arrow_1.png" COMP;
+   images.image: "images/mini_arrow_2.png" COMP;
+   images.image: "images/mini_arrow_3.png" COMP;
    script {
       public disable_live_preview = 0;
 		public mouse_in = 0;
@@ -305,6 +310,110 @@ group {
 				color: 255 255 255 255;
 			}
 		}
+		 part { name: "drop0"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "images/mini_arrow_0.png";
+            rel1.to: "frame";
+            rel1.offset: -1 -1;
+            rel1.relative: 0.0 0.0;
+            rel2.to: "frame";
+            rel2.relative: 0.0 0.0;
+            rel2.offset: -1 -1;
+            align: 0.0 0.0;
+            min: 10 10;
+            fixed: 1 1;
+            visible: 0;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+         description { state: "hidden" 0.0;
+            inherit: "default" 0.0;
+            rel1.offset: 11 11;
+            rel2.offset: 11 11;
+            min: 1 1;
+            color: 255 255 255 0;
+         }
+      }
+      part { name: "drop1"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "images/mini_arrow_1.png";
+            rel1.to: "frame";
+            rel1.offset: 0 -1;
+            rel1.relative: 1.0 0.0;
+            rel2.to: "frame";
+            rel2.relative: 1.0 0.0;
+            rel2.offset: 0 -1;
+            align: 1.0 0.0;
+            min: 10 10;
+            fixed: 1 1;
+            visible: 0;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+         description { state: "hidden" 0.0;
+            inherit: "default" 0.0;
+            rel1.offset: -12 11;
+            rel2.offset: -12 11;
+            min: 1 1;
+            color: 255 255 255 0;
+         }
+      }
+      part { name: "drop2"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "images/mini_arrow_2.png";
+            rel1.to: "frame";
+            rel1.offset: 0 0;
+            rel1.relative: 1.0 1.0;
+            rel2.to: "frame";
+            rel2.relative: 1.0 1.0;
+            rel2.offset: 0 0;
+            align: 1.0 1.0;
+            min: 10 10;
+            fixed: 1 1;
+            visible: 0;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+         description { state: "hidden" 0.0;
+            inherit: "default" 0.0;
+            rel1.offset: -12 -12;
+            rel2.offset: -12 -12;
+            min: 1 1;
+            color: 255 255 255 0;
+         }
+      }
+      part { name: "drop3"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "images/mini_arrow_3.png";
+            rel1.to: "frame";
+            rel1.offset: -1 0;
+            rel1.relative: 0.0 1.0;
+            rel2.to: "frame";
+            rel2.relative: 0.0 1.0;
+            rel2.offset: -1 0;
+            align: 0.0 1.0;
+            min: 10 10;
+            fixed: 1 1;
+            visible: 0;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+         description { state: "hidden" 0.0;
+            inherit: "default" 0.0;
+            rel1.offset: 11 -12;
+            rel2.offset: 11 -12;
+            min: 1 1;
+            color: 255 255 255 0;
+         }
+      }
 		part {
 			name: "event";
 			type: RECT;
@@ -404,11 +513,89 @@ group {
 
 			transition: SINUSOIDAL 0.2;
 		}
+		 program { name: "drop1";
+         signal: "e,action,drag,in"; source: "e";
+         action: STATE_SET "active" 0.0;
+         target: "drop0";
+         target: "drop1";
+         target: "drop2";
+         target: "drop3";
+         after: "drop2";
+      }
+      program { name: "drop2";
+         action: STATE_SET "hidden" 0.0;
+         transition: LINEAR 0.5;
+         target: "drop0";
+         target: "drop1";
+         target: "drop2";
+         target: "drop3";
+         after: "drop1";
+      }
+      program {
+         signal: "e,action,drag,out"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "drop0";
+         target: "drop1";
+         target: "drop2";
+         target: "drop3";
+      }
+	}
+}
+
+group {
+	name: "e/modules/pager16/desk";
+	inherit: "e/modules/pager/desk";
+	parts {
+		part {
+			insert_after: "e.text.label";
+			name: "focus2";
+			type: RECT;
+			mouse_events: 0;
+			description {
+				state: "default" 0.0;
+				rel1.to: "frame";
+				rel2.to: "frame";
+				rel1.offset: 2 2;
+				rel2.offset: -3 -3;
+				color: 255 255 255 140;
+				color_class: "focus";
+				visible: 1;
+				}
+			description {
+				state: "active" 0.0;
+				inherit: "default" 0.0;
+				visible: 0;
+				}
+			}
+	}
+	programs {
+		program {
+			name: "focused";
+			signal: "e,state,selected";
+			source: "e";
+			action: STATE_SET "active" 0.0;
+			target: "focus";
+			target: "focus2";
+			target: "over";
+		}
+		program {
+			name: "unfocused";
+			signal: "e,state,unselected";
+			source: "e";
+			action: STATE_SET "default" 0.0;
+			target: "focus";
+			target: "focus2";
+			target: "over";
+		}
 	}
 }
 
 group {
 	name: "e/modules/pager/window";
+	images {
+		image: "images/pager_win_focused.png" COMP;
+		image: "images/pager_win_unfocused.png" COMP;
+	}
 	parts {
 		part { name: "urgent-clipper";
 			type: RECT;

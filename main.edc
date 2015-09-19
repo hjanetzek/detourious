@@ -3,7 +3,9 @@
  * by cored.org et al (see AUTHORS).
  */
 
-#define VERSION_STRING 0.0.1
+externals.external: "elm";
+
+#define VERSION_STRING 0.0.2
 #define LABEL_THEME_NAME "dtrs"
 
 #define BUILD_COMPOSITE 1
@@ -15,6 +17,8 @@
 #define USE_BOLD_FONT 0     /* bold font scales better on high dpi displays */
 #endif
 
+#define PAGER_SHOW_FRAME 0
+
 #define ANIMATED_CURSOR 1	/* Mouse pointer will pulsate when inactive */
 #define ALTERNATE_CURSOR 0	/* Alternate (black) mouse pointer */
 
@@ -24,17 +28,33 @@
 #define COLOR_LIST_BG_ODD    240 245 250 255
 #define COLOR_LIST_BG_ACTIVE 138 171 225 255
 #define COLOR_LIST_HEADER    103 135 183 255
+#define COLOR_FADE           0   0   0   0
+#define COLOR_SELECTED       138 171 225 200
+#define COLOR_SELECTED_FADE  138 171 225 100
+
 
 #ifndef COLORS
 #define COLORS 0 /* 0: default, 1: darker */
 #endif
+#if (COLORS == 0)
 data {
 	item: "theme/name" 		"detourious";
-	item: "theme/version"	"0.8.0";
-	item: "theme/author"	"Alberto Castro, Hannes Janetzek, et al.";
+	item: "theme/version"	"0.9.0";
+	item: "theme/author"	"Alberto Castro, Hannes Janetzek, Elias Tchastikov et al.";
 	item: "theme/license"	"BSD Artistic License";
 	item: "gtk-theme"       "detourious";
+	item: "version"         "110";
 }
+#else
+data {
+	item: "theme/name" 		"detourious-dark";
+	item: "theme/version"	"0.9.0";
+	item: "theme/author"	"Alberto Castro, Hannes Janetzek, Elias Tchastikov et al.";
+	item: "theme/license"	"BSD Artistic License";
+	item: "gtk-theme"       "detourious-dark";
+	item: "version"         "110";
+}
+#endif
 
 color_classes {
 #include "colors.edc"
@@ -54,6 +74,63 @@ collections {
 #include "text.edc"
 #include "parts.edc"
 
+//~elementary
+#include "bits/elm/access.edc"
+#include "bits/elm/bg.edc"
+#include "bits/elm/scroller.edc"
+#include "bits/elm/label.edc"
+#include "bits/elm/button.edc"
+#include "bits/elm/toggle.edc"
+#include "bits/elm/clock.edc"
+#include "bits/elm/menu.edc"
+#include "bits/elm/frame.edc"
+#include "bits/elm/tooltip.edc"
+#include "bits/elm/hover.edc"
+#include "bits/elm/entry.edc"
+#include "bits/elm/bubble.edc"
+#include "bits/elm/photo.edc"
+#include "bits/elm/thumb.edc"
+#include "bits/elm/icon.edc"
+#include "bits/elm/toolbar.edc"
+#include "bits/elm/notify.edc"
+#include "bits/elm/slideshow.edc"
+#include "bits/elm/win.edc"
+#include "bits/elm/list.edc"
+#include "bits/elm/slider.edc"
+#include "bits/elm/actionslider.edc"
+#include "bits/elm/genlist.edc"
+#include "bits/elm/check.edc"
+#include "bits/elm/radio.edc"
+#include "bits/elm/pager.edc"
+#include "bits/elm/progressbar.edc"
+#include "bits/elm/separator.edc"
+#include "bits/elm/spinner.edc"
+#include "bits/elm/index.edc"
+#include "bits/elm/gengrid.edc"
+#include "bits/elm/photocam.edc"
+#include "bits/elm/map.edc"
+#include "bits/elm/naviframe.edc"
+#include "bits/elm/panes.edc"
+#include "bits/elm/panel.edc"
+#include "bits/elm/conformant.edc"
+#include "bits/elm/calendar.edc"
+#include "bits/elm/colorselector.edc"
+#include "bits/elm/flipselector.edc"
+#include "bits/elm/diskselector.edc"
+#include "bits/elm/fileselector.edc"
+#include "bits/elm/layout.edc"
+#include "bits/elm/segment_control.edc"
+#include "bits/elm/player.edc"
+#include "bits/elm/video.edc"
+#include "bits/elm/focus.edc"
+#include "bits/elm/multibuttonentry.edc"
+#include "bits/elm/popup.edc"
+#include "bits/elm/ctxpopup.edc"
+#include "bits/elm/dayselector.edc"
+#include "bits/elm/border.edc"
+#include "bits/elm/epulse_playbacks.edc"
+#include "bits/elm/enjoy_default.edc"
+//~end of elementary
 
 #include "bits/about_detour.edc"	/* about this edje */
 #include "bits/about_e.edc"		/* about enlightenment */
@@ -84,15 +161,14 @@ collections {
 #include "bits/ilist.edc"		/* icon list */
 #include "bits/init.edc"		/* init screen */
 #include "bits/label.edc"		/* label definiton group */
+#include "bits/scrollframe.edc"		/* scrollframe groups */
 #include "bits/fileman.edc" 		/* file manager groups */
 #include "bits/menu.edc" 		/* menu and context menu groups */
-	//~ include "bits/mixer.png"		/* mixer module group */
 #include "bits/move_resize_info.edc" 		/* move window information group */
 #include "bits/pager.edc"		/* pager */
 #include "bits/pointer.edc"		/* mouse pointer group */
 #include "bits/preview.edc"		/* preview */
 #include "bits/radio.edc"		/* radio widget group */
-#include "bits/scrollframe.edc"		/* scrollframe groups */
 #include "bits/shelf.edc"		/* shelf groups */
 #include "bits/slider.edc"		/* slider group */
 	//~ #include "bits/slidesel.edc"	/* slidesel */
@@ -101,7 +177,7 @@ collections {
 #include "bits/sys.edc"			/* system actions */
 #include "bits/syscon.edc"		/* system connection group */
 #include "bits/tclock.edc"		/* extra: tclock module */
-	//~ #include "bits/temperature.edc"	/* temperature module */
+#include "bits/temperature.edc"	/* temperature module */
 #include "bits/textblock.edc"		/* textblock definitions group */
 	//~ #include "bits/tlist.edc"		/* tlist groups (deprecated) */
 #include "bits/transitions.edc"		/* desktop wallpaper transitions */
@@ -112,10 +188,22 @@ collections {
 #include "bits/notification.edc"
 #include "bits/evry-shotgun.edc"
 #include "bits/engage.edc"		/* engage module */
-#include "bits/bluez.edc"       /* bluez module */
+#include "bits/bluez4.edc"       /* bluez4 module */
 #include "bits/mixer.edc"       /* mixer module */
+#include "bits/connman.edc"		/* connman module */
+#include "bits/music_control.edc"/* music control module */
+#include "bits/packagekit.edc"	/* package manager integration module */
 #include "bits/illume.edc"
 #include "bits/illume_kbd.edc"
-#include "bits/itask.edc"
+#include "bits/itask.edc"		/* itask module */
+#include "bits/tasks.edc"		/* tasks module */
+#include "bits/efm_icons.edc"
+#include "bits/wizard.edc"
+#include "bits/appmenu.edc"		/* appliction menu module */
+#include "bits/xkbswitch.edc"	/* keyboard module */
+#include "bits/cpufreq.edc"		/* cpufreq module */
+#include "bits/backlight.edc"	/* backlight module */
+#include "bits/randr.edc"		/* screen settings module*/
+#include "bits/edgebindings.edc"
 }
 

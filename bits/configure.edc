@@ -87,3 +87,55 @@ group {
         }
     }	   
 }
+
+group { name: "e/modules/conf/main";
+   images.image: "images/icon_spanner-sys.png" COMP;
+   //min: 16 16;
+   //max: 80 80;
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "images/icon_spanner-sys.png";
+			color: 59 59 59 255;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+         }
+         description { state: "hilight" 0.0;
+			inherit: "default" 0.0;
+			//image.normal: "images/icon_system-shutdown-sys.png";
+			color: 135 169 224 255;
+			//color3: 0 0 0 128;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            //image.normal: "images/icon_system-shutdown-sys.png";
+            color: 33 44 67 255;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,down,1"; source: "base";
+         action: STATE_SET "clicked" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,up,1"; source: "base";
+         action: STATE_SET "hilight" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,in"; source: "base";
+         action: STATE_SET "hilight" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,out"; source: "base";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,clicked,1*"; source: "base";
+         action: SIGNAL_EMIT "e,action,conf" "";
+      }
+   }
+}

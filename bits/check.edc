@@ -344,6 +344,7 @@ group {
 				}
 				TEXT_COLOR;
 				TEXT_NORMAL("check_button", 0.0 0.5, 1 1);
+				text.ellipsis: -1;
 			}
 			description {
 				state: "disabled" 0.0;
@@ -654,6 +655,7 @@ group {
 				}
 				TEXT_COLOR;
 				TEXT_NORMAL("check_button", 0.0 0.5, 1 1);
+				text.ellipsis: -1;
 			}
 			description {
 				state: "disabled" 0.0;

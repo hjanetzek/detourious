@@ -43,6 +43,8 @@ group {
 					normal: "images/runner_im0.png";
 					border: 6 6 0 0;
 				}
+				fill.smooth: 0;
+				fixed: 0 1;
 			}
 			description {
 				state: "disabled" 0.0;
@@ -50,7 +52,31 @@ group {
 				color: 255 255 255 200;
 			}
 		}
-
+		part {
+			name: "slider_runner_active";
+			mouse_events: 0;
+			clip_to: "clip";
+			description { state: "default" 0.0;
+				max: 99999 15;
+				min: 0 15;
+				rel1.to: "slider_runner";
+				rel2.to_x: "slider_image";
+				rel2.to_y: "slider_runner";
+				rel2.relative: 0.5 1.0;
+				image {
+					normal: "images/runner_im2.png";
+					border: 6 6 0 0;
+					}
+				fill.smooth: 0;
+				color: COLOR_SELECTED;
+				fixed: 0 1;
+			    }
+			 description { state: "disabled" 0.0;
+				inherit: "default" 0.0;
+				color_class: "none";
+				color: COLOR_SELECTED_FADE;
+				}
+		}
 		part {
 			name: "label_under";
 			mouse_events: 0;
@@ -112,6 +138,7 @@ group {
 				}
 				TEXT_COLOR;
 				TEXT_NORMAL("slider", 0.5 0.5, 1 1);
+				text.ellipsis: -1;
 				/* text.max: 0 1; */
 			}
 		}
@@ -157,11 +184,11 @@ group {
 				color: 255 0 0 0;
 				rel1 {
 					to: "base";
-					offset: 1 0;
+					//offset: 1 0;
 				}
 				rel2 {
 					to: "base";
-					offset: -1 -1;
+					//offset: -1 -1;
 				}
 			}
 		}
@@ -181,16 +208,10 @@ group {
 				max: 29 20;
 				fixed: 1 1;
 				color: 255 0 0 0;
-				rel1 {
-					to: "base";
-					relative: 0.5 0.5;
-					offset: 0 0;
-				}
-				rel2 {
-					to: "base";
-					relative: 0.5 0.5;
-					offset: 0 0;
-				}
+				rel1.relative: 0.5 0.0;
+				rel1.to_x: "base";
+				rel2.relative: 0.5 1.0;
+				rel2.to_x: "base";
 			}
 		}
 
@@ -346,6 +367,7 @@ group {
 			action: STATE_SET "default" 0.0;
 			target: "clip";
 			target: "catch";
+			target: "slider_runner_active";
 			target: "slider_image";
 			target: "shadow_focus_clip";
 		}
@@ -357,6 +379,7 @@ group {
 			action: STATE_SET "disabled" 0.0;
 			target: "clip";
 			target: "catch";
+			target: "slider_runner_active";
 			target: "slider_image";
 			target: "shadow_focus_clip";
 		}
@@ -436,6 +459,8 @@ group {
 					normal: "images/runner_im1.png";
 					border: 0 0 6 6;
 				}
+				fill.smooth: 0;
+				fixed: 1 0;
 			}
 			description {
 				state: "disabled" 0.0;
@@ -443,7 +468,31 @@ group {
 				color: 255 255 255 200;
 			}
 		}
-
+		part {
+			name: "slider_runner_active";
+			mouse_events: 0;
+			clip_to: "clip";
+			description { state: "default" 0.0;
+				max: 15 99999;
+				min: 15 0;
+				rel1.to_x: "slider_runner";
+				rel1.to_y: "slider_image";
+				rel1.relative: 0.0 0.5;
+				rel2.to: "slider_runner";
+				image {
+					normal: "images/runner_im3.png";
+					border: 0 0 6 6;
+					}
+				fill.smooth: 0;
+				color: COLOR_SELECTED;
+				fixed: 1 0;
+			    }
+			 description { state: "disabled" 0.0;
+				inherit: "default" 0.0;
+				color_class: "none";
+				color: COLOR_SELECTED_FADE;
+				}
+		}
 		part {
 			name: "label_under";
 			type: IMAGE;
@@ -533,6 +582,7 @@ group {
 				}
 				TEXT_COLOR;
 				TEXT_NORMAL("slider", 0.5 0.5, 1 1);
+				text.ellipsis: -1;
 			}
 		}
 
@@ -768,7 +818,8 @@ group {
 			action: STATE_SET "default" 0.0;
 			target: "clip";
 			target: "catch";
-			target: "slider_runner";
+			//target: "slider_runner";
+			target: "slider_runner_active";
 			target: "slider_image";
 			target: "shadow_focus_clip";
 		}
@@ -780,6 +831,7 @@ group {
 			action: STATE_SET "disabled" 0.0;
 			target: "clip";
 			target: "catch";
+			target: "slider_runner_active";
 			target: "slider_image";
 			target: "shadow_focus_clip";
 		}

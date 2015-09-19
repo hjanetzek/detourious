@@ -75,16 +75,8 @@ group {
          clip_to: "clipper";
          description {
             state: "default" 0.0;
-            rel1 { 
-               to: "entry"; 
-               relative: 0.0 0.0; 
-               offset: 6 8; 
-            }
-            rel2 { 
-               to: "entry"; 
-               relative: 1.0 1.0; 
-               offset: -7 -8; 
-            }
+				rel1.offset: 6 3;
+				rel2.offset: -7 -4;
          }
       }
    }
@@ -124,14 +116,14 @@ group {
 
 group {
    name: "e/widgets/entry/text";
-   styles {
-      style { name: "entry_textblock_style";
-         base: "font=Sans font_size=10 color=#000 text_class=entry color_classs=entry_text";
+   /*styles {
+      style { name: "entry_textblock_style_nl";
+         base: "font=Sans font_size=10 color=#000 text_class=entry color_class=entry_text";
       }
-      style { name: "entry_textblock_disabled_style";
+      style { name: "entry_textblock_disabled_style_nl";
          base: "font=Sans font_size=10 color=#000 text_class=entry color_class=entry_text_disabled";
       }
-   }
+   }*/
    parts {
       part {
          name: "e.text.text";
@@ -146,11 +138,13 @@ group {
          source4: "e/widgets/entry/cursor"; // cursorover
          description { state: "default" 0.0;
             color_class: "entry_text";
+            align: 0.0 0.5;
             text {
-               text: "";
+               //text: "";
                style: "entry_textblock_style";
                min: 1 1;
                align: 0.0 0.5;
+               ellipsis: -1;
             }
          }
          description { state: "disabled" 0.0;

@@ -7,10 +7,10 @@
 #define FONT "Sans:style=bold"
 #define FONT_BOLD "Sans:style=bold"
 #define FONT_ITALIC "Sans:style=bold,italic"
-#define TEXT_SIZE 8
-#define TEXT_SIZE_BOLD 8
-#define TEXT_SIZE_LARGE 8
-#define TEXT_SIZE_SMALL 7
+#define TEXT_SIZE 9
+#define TEXT_SIZE_BOLD 9
+#define TEXT_SIZE_LARGE 9
+#define TEXT_SIZE_SMALL 8
 #define TEXT_COLOR								\
     color_class: "label_text";					\
     color3: 255 255 255 255;
@@ -18,10 +18,10 @@
 #define FONT "Sans"
 #define FONT_BOLD "Sans:style=bold"
 #define FONT_ITALIC "Sans:style=italic"
-#define TEXT_SIZE 9
-#define TEXT_SIZE_BOLD 8
-#define TEXT_SIZE_LARGE 9
-#define TEXT_SIZE_SMALL 8
+#define TEXT_SIZE 10
+#define TEXT_SIZE_BOLD 9
+#define TEXT_SIZE_LARGE 10
+#define TEXT_SIZE_SMALL 9
 #define TEXT_COLOR								\
     color_class: "label_text";					\
     color3: 255 255 255 255;
@@ -50,12 +50,32 @@
 	color: 60 60 60 229;						\
     color3: 170 168 169 64;
 
+#define TEXT_DOT								\
+	text {										\
+		font: FONT;								\
+		size: 9;								\
+		min: 1 1;								\
+		align: 0.0 0.5;							\
+		text: ".";								\
+	}
+
 #define TEXT_NORMAL(_text_class, _align, _min)	\
 	text {										\
 		text: "";								\
 		font: FONT;								\
 		size: TEXT_SIZE;						\
 		min: _min;								\
+		align: _align;							\
+		text_class: _text_class;				\
+	}
+	
+#define TEXT_NORMAL2(_text_class, _align, _min, _max)	\
+	text {										\
+		text: "";								\
+		font: FONT;								\
+		size: TEXT_SIZE;						\
+		min: _min;								\
+		max: _max;								\
 		align: _align;							\
 		text_class: _text_class;				\
 	}
@@ -98,6 +118,17 @@
 		align: _align;							\
 		text_class: _text_class;				\
 	}
+	
+#define TEXT_BOLD2(_text_class, _align, _min, _max)	\
+	text {										\
+		text: "";								\
+		font: FONT_BOLD;						\
+		size: TEXT_SIZE_BOLD;					\
+		min: _min;								\
+		max: _max;								\
+		align: _align;							\
+		text_class: _text_class;				\
+	}
 
 #define TEXT_TITLE(_text_class, _align, _min)	\
 	text {										\
@@ -107,7 +138,50 @@
 		align: _align;							\
 		text_class: _text_class;				\
 	}
+	
+#define TEXT_BUTTON(_text_class, _label, _align, _min)	\
+	text {												\
+		text: _label;									\
+		font: FONT_BOLD;								\
+		size: 8;										\
+		min: _min;										\
+		align: _align;									\
+		text_class: _text_class;						\
+	}
 
+#define BUTTON_BASE									\
+	part {											\
+		name: "base";								\
+		type: IMAGE;								\
+		mouse_events: 0;							\
+		description {								\
+			state: "default" 0.0;					\
+			min: 30 26;								\
+			image.normal: "images/button_im0.png";	\
+			image.border: 7 7 7 7;					\
+			color_class: "dialog_base";				\
+			rel1 {									\
+				offset: 3 4;						\
+			}										\
+													\
+			rel2 {									\
+				offset: -4 -5;						\
+			}										\
+		}											\
+	}
+
+#define BACKGROUND_OVERLAY						\
+	part { name: "base";						\
+		type: RECT;								\
+		mouse_events: 1;						\
+		description { state: "default" 0.0;		\
+			color: 0 0 0 0;						\
+		}										\
+		description { state: "visible" 0.0;		\
+			inherit: "default" 0.0;				\
+			color: COLOR_FADE;					\
+		}										\
+	}											\
 
 styles {
 	style {
@@ -207,5 +281,176 @@ styles {
 		tag: "underline" "+ underline=on underline_color=#3c3c3c font_size="FONT_SIZE_LARGE" color=#3c3c3c";
 		tag: "lighter" "+ color=#07070780";
 		tag:  "br" "\n"; 
-	}  
+	}
+	style { name: "textblock_style";
+		base: "font="FONT" font_size=9 color=#3c3c3c text_class=label";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "hilight" "+ font_weight=Bold";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "tab" "\t";
+	}
+	style { name: "textblock_style2";
+		base: "font="FONT_BOLD" font_size=9 align=center color=#fff wrap=word text_class=label";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "hilight" "+ color=#ffff";
+		tag:  "b" "+ color=#ffff";
+		tag:  "tab" "\t";
+	}
+	style { name: "entry_textblock_style";
+		base: "font="FONT" font_size=10 color=#3c3c3c wrap=word text_class=entry";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "tab" "\t";
+		tag:  "em" "+ font_style=Oblique";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "link" "+ color=#800 underline=on underline_color=#8008";
+		tag:  "hilight" "+ font_weight=Bold";
+	}
+	style { name: "entry_textblock_guide_style";
+		base: "font="FONT" font_size=10 color=#3c3c3cc0 wrap=word text_class=entry";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "tab" "\t";
+		tag:  "em" "+ font_style=Oblique";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "link" "+ color=#3c3c3cc0 underline=on underline_color=#3c3c3cc0";
+		tag:  "hilight" "+ font_weight=Bold";
+	}
+	style { name: "entry_textblock_disabled_style";
+		base: "font="FONT" font_size=10 color=#3c3c3c80 wrap=word text_class=entry";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "tab" "\t";
+		tag:  "em" "+ font_style=Oblique";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "link" "+ color=#3c3c3c80 underline=on underline_color=#3c3c3c80";
+		tag:  "hilight" "+ font_weight=Bold";
+	}
+	style { name: "entry_textblock_style_mixedwrap";
+		base: "font="FONT" font_size=10 color=#3c3c3c wrap=mixed text_class=entry";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "tab" "\t";
+		tag:  "em" "+ font_style=Oblique";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "link" "+ color=#800 underline=on underline_color=#8008";
+		tag:  "hilight" "+ font_weight=Bold";
+	}
+	style { name: "entry_textblock_guide_style_mixedwrap";
+		base: "font="FONT" font_size=10 color=#3c3c3cc0 wrap=mixed text_class=entry";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "tab" "\t";
+		tag:  "em" "+ font_style=Oblique";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "link" "+ color=#3c3c3cc0 underline=on underline_color=#3c3c3cc0";
+		tag:  "hilight" "+ font_weight=Bold";
+	}
+	style { name: "entry_textblock_disabled_style_mixedwrap";
+		base: "font="FONT" font_size=10 color=#3c3c3c80 wrap=char text_class=entry";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "tab" "\t";
+		tag:  "em" "+ font_style=Oblique";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "link" "+ color=#3c3c3c80 underline=on underline_color=#3c3c3c80";
+		tag:  "hilight" "+ font_weight=Bold";
+	}
+	style { name: "entry_textblock_style_charwrap";
+		base: "font="FONT" font_size=10 color=#3c3c3c wrap=char text_class=entry";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "tab" "\t";
+		tag:  "em" "+ font_style=Oblique";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "link" "+ color=#800 underline=on underline_color=#8008";
+		tag:  "hilight" "+ font_weight=Bold";
+	}
+	style { name: "entry_textblock_guide_style_charwrap";
+		base: "font="FONT" font_size=10 color=#3c3c3cc0 wrap=char text_class=entry";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "tab" "\t";
+		tag:  "em" "+ font_style=Oblique";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "link" "+ color=#3c3c3cc0 underline=on underline_color=#3c3c3cc0";
+		tag:  "hilight" "+ font_weight=Bold";
+	}
+	style { name: "entry_textblock_disabled_style_charwrap";
+		base: "font="FONT" font_size=10 color=#3c3c3c80 wrap=char text_class=entry";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "tab" "\t";
+		tag:  "em" "+ font_style=Oblique";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "link" "+ color=#3c3c3c80 underline=on underline_color=#3c3c3c80";
+		tag:  "hilight" "+ font_weight=Bold";
+	}
+	style { name: "entry_single_textblock_style";
+		base: "font="FONT" font_size=10 color=#3c3c3c wrap=none text_class=entry";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "tab" "\t";
+		tag:  "em" "+ font_style=Oblique";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "link" "+ color=#800 underline=on underline_color=#8008";
+		tag:  "hilight" "+ font_weight=Bold";
+	}
+	style { name: "entry_single_textblock_guide_style";
+		base: "font="FONT" font_size=10 color=#3c3c3cc0 wrap=none text_class=entry";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "tab" "\t";
+		tag:  "em" "+ font_style=Oblique";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "link" "+ color=#3c3c3cc0 underline=on underline_color=#3c3c3cc0";
+		tag:  "hilight" "+ font_weight=Bold";
+	}
+	style { name: "entry_single_textblock_disabled_style";
+		base: "font="FONT" font_size=10 color=#3c3c3c80 wrap=none text_class=entry";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "tab" "\t";
+		tag:  "em" "+ font_style=Oblique";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "link" "+ color=#3c3c3c80 underline=on underline_color=#3c3c3c80";
+		tag:  "hilight" "+ font_weight=Bold";
+	} 
+	style { name: "tooltip_style";
+		base: "font="FONT" font_size=8 color=#666 wrap=word";
+		tag:  "br" "\n";
+		tag:  "hilight" "+ font_weight=Bold";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "tab" "\t";
+	}
+	style { name: "genlist_textblock_style";
+		base: "font="FONT" font_size=9 color=#3c3c3c wrap=char text_class=list_item";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "tab" "\t";
+	}
+	style { name: "genlist_textblock_style2";
+		base: "font="FONT" font_size=9 color=#fff wrap=char text_class=list_item";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "tab" "\t";
+	}
+	style { name: "gengrid_style";
+		base: "font="FONT" font_size=9 align=left valign=0.5 color=#3c3c3c text_class=grid_item";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "hilight" "+ font_weight=Bold";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "tab" "\t";
+	}
+	style { name: "gengrid_selected_style";
+		base: "font="FONT" font_size=9 align=left valign=0.5 color=#fff text_class=grid_item";
+		tag:  "br" "\n";
+		tag:  "ps" "ps";
+		tag:  "hilight" "+ font_weight=Bold";
+		tag:  "b" "+ font_weight=Bold";
+		tag:  "tab" "\t";
+	} 
 }

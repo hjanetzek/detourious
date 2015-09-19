@@ -10,6 +10,7 @@
          image {                                                        \
             normal: "images/menu_grad.png";                             \
          }                                                              \
+         color_class: "dialog_base";									\
       }                                                                 \
    }                                                                    \
 

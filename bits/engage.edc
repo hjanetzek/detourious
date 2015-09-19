@@ -303,6 +303,7 @@ group {
 
 				TEXT_COLOR_SELECTED;
 				TEXT_LARGE("module_large", 0.5 0.5, 1 1);
+				text.ellipsis: -1;
 			}
 		}
 
@@ -408,6 +409,7 @@ group {
 				rel2.offset: -1 -1;
 				TEXT_COLOR_SELECTED;
 				TEXT_LARGE("module_large", 0.5 0.5, 1 1);
+				text.ellipsis: -1;
 			}
 		}
 

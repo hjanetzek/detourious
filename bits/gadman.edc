@@ -496,6 +496,7 @@ group {
 					border: 2 2 2 2;
 					middle: 1;
 				}
+				color_class: "dialog_base";
 			}
 		}
 

@@ -88,6 +88,7 @@ group {
 				}
 				TEXT_COLOR;
 				TEXT_NORMAL("ilist_item", 0.0 0.5, 1 1);
+				text.ellipsis: -1;
 				color_class: "ilist_item";
 			}
 			description {
@@ -194,6 +195,7 @@ group {
 				}
 				TEXT_COLOR;
 				TEXT_NORMAL("ilist_item", 0.0 0.5, 1 1);
+				text.ellipsis: -1;
 				color_class: "ilist_item_odd";
 			}
 			description {
@@ -293,6 +295,7 @@ group {
 					offset: -6 -3; 
 				}
 				TEXT_HEADER("ilist_header", 0.0 0.5, 1 1);
+				text.ellipsis: -1;
 			}
 		}
 

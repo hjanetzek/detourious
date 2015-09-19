@@ -2,11 +2,12 @@
 group { 
 	name: "e/modules/start/main";
 	alias: "e/icons/start-here";
-	max: 128 128;
+	max: 256 256;
+
 
 	images {
 		set {
-			name: "e";
+			name: "e_start";
 			image {
 				image: "images/e-24x24.png" COMP;
 				size: 0 0 24 24;
@@ -25,7 +26,7 @@ group {
 			}
 		}
 		set {
-			name: "e_fill";
+			name: "e_start_fill";
 			image {
 				image: "images/e_fill-24x24.png" COMP;
 				size: 0 0 24 24;
@@ -44,6 +45,7 @@ group {
 			}
 		}
 	}
+	
 
 	parts {
 		part { 
@@ -54,7 +56,7 @@ group {
 				state: "default" 0.0;
 				aspect: 1.0 1.0;
 				aspect_preference: BOTH;
-				image.normal: "e";
+				image.normal: "e_start";
 				rel1.offset: 2 2;
 				rel2.offset: -3 -3;
 			}
@@ -70,7 +72,7 @@ group {
 				color: 255 255 255 0;
 				aspect: 1.0 1.0;
 				aspect_preference: BOTH;
-				image.normal: "e_fill";
+				image.normal: "e_start_fill";
 				rel1.offset: 2 2;
 				rel2.offset: -3 -3;
 			}
@@ -86,7 +88,6 @@ group {
 
 	programs {
 		program { 
-			name: "on";
 			signal: "e,state,focused";
 			source: "e";
 			action: STATE_SET "active" 0.0;
@@ -95,7 +96,6 @@ group {
 		}
 
 		program { 
-			name: "off";
 			signal: "e,state,unfocused";
 			source: "e";
 			action: STATE_SET "default" 0.0;

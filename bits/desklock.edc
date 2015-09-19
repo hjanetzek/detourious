@@ -173,6 +173,7 @@ group {
 					align: 0.0 0.5;
 					min: 1 1;
 					text_class: "desklock_title";
+					ellipsis: -1;
 				}
 			}
 		}
@@ -220,6 +221,7 @@ group {
 				}
 				TEXT_COLOR;
 				TEXT_NORMAL("entry", 0.0 0.5, 1 1);
+				text.ellipsis: -1;
 			}
 		}
 

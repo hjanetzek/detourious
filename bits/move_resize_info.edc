@@ -5,6 +5,7 @@ group {
 
 	data {
 		item: "shaped" "1";
+		item: "noshadow" "1";
 	}
 
 	parts {
@@ -21,13 +22,14 @@ group {
 					normal: "images/ibar_im0.png";
 					border: 5 5 5 5;
 				}
+				fill.smooth: 0;
 			}
 		}
 
 		part {
 			name: "e.text.label";
 			type: TEXT;
-			effect: SHADOW;
+			effect: SHADOW ;
 			scale: 1;
 			mouse_events: 0;
 			description {
@@ -35,6 +37,7 @@ group {
 				align: 0.5 0.5;
 				TEXT_COLOR_SELECTED;
 				TEXT_NORMAL("label_normal", 0.5 0.5, 1 0);
+				text.ellipsis: -1;
 			}
 		}
 	}

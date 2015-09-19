@@ -25,6 +25,7 @@ part { 								\
 			normal: "images/dialog_im2.png"; 	\
 			border: 3 3 3 3; 			\
 		} 						\
+		color_class: "dialog_base";		\
 	} 							\
 }
 
@@ -50,6 +51,7 @@ part { 						\
 		text { 				\
 			style: "sys_style"; 	\
 			min: 1 1; 		\
+			ellipsis: -1;		\
 		} 				\
 	} 					\
 }

@@ -520,7 +520,7 @@ group {
 				rel2.to: "clipper";
 				color: 180 180 180 255;
 				TEXT_NORMAL("label_normal", 0.0 0.5, 1 1);
-				text.elipsis: 0.0;
+				text.ellipsis: -1;
 			}
 			description {
 				state: "selected" 0.0;

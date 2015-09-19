@@ -26,6 +26,7 @@ group {
 					normal: "images/dialog_im2.png";
 					border: 3 3 3 3;
 				}
+				color_class: "dialog_base";
 			}
 		}
 
@@ -122,6 +123,7 @@ group {
 					offset: -1 16; 
 				}
 				TEXT_HEADER("label_title", 0.0 0.0, 1 1);
+				text.ellipsis: -1;
 			}
 		}
 
@@ -147,6 +149,7 @@ group {
 					offset: -1 10; 
 				}
 				TEXT_NORMAL(0, 1.0 0.5, 1 1);
+				text.ellipsis: -1;
 			}
 		}
 
@@ -392,7 +395,8 @@ group {
 				rel2 { 
 					to: "button.area"; 
 					relative: 0.5 0.5; 
-				}	
+				}
+				color_class: "dialog_base";	
 			}
 		}
 
@@ -482,6 +486,7 @@ group {
 				}
 				TEXT_COLOR_BOLD;
 				TEXT_BOLD("button", 0.5 0.5, 1 1);
+				text.ellipsis: -1;
 				text.text: "Close";				
 			}
 			description {

@@ -126,6 +126,7 @@ group {
 					min: 1 1;
 					align: 0.0 0.5;
 					text_class: "init_title";
+					ellipsis: -1;
 				}
 			}
 		}
@@ -157,6 +158,7 @@ group {
 					min:  1 1;
 					align: 0.0 0.5;
 					text_class: "init_version";
+					ellipsis: -1;
 				}
 			}
 		}
@@ -187,7 +189,8 @@ group {
 					size: 11;
 					min: 1 1;
 					align: 0.0 0.5;
-					text_class: "init_text"; 
+					text_class: "init_text";
+					ellipsis: -1; 
 				}
 			}
 		}
@@ -396,19 +399,17 @@ group {
 					min: 1 1;
 					align: 0.0 0.5;
 					text_class: "init_text";
+					ellipsis: -1;
 				}
 			}
 		}
-		part {
-			name: "busy";
-			type: IMAGE;
+		part { name: "busy_shadow"; mouse_events: 0;
 			clip_to: "busy_clip";
-			mouse_events: 0;
-			description {
-				state: "default" 0.0;
-				min: 42 42;
-				max: 42 42;
+			description { state: "default" 0.0;
 				fixed: 1 1;
+				image.normal: "images/cursor_shadow.png";
+				min: 40 40;
+				max: 40 40;
 				rel1 { 
 					to: "background"; 
 					relative: 0.5 0.5; 
@@ -419,16 +420,35 @@ group {
 					relative: 0.5 0.5; 
 					offset: -1 -1; 
 				}
-				image {
-					normal: "images/cursor_im0.png";
-					tween:  "images/cursor_im1.png";
-					tween:  "images/cursor_im2.png";
-					tween:  "images/cursor_im3.png";
-					normal: "images/cursor_im0.png";
-					tween:  "images/cursor_im1.png";
-					tween:  "images/cursor_im2.png";
-					tween:  "images/cursor_im3.png";
-				}
+			}
+		}
+		part {
+			name: "busy_spinner";
+			type: IMAGE;
+			clip_to: "busy_clip";
+			mouse_events: 0;
+			description {
+				state: "default" 0.0;
+				fixed: 1 1;
+				rel1.to: "busy_shadow";
+				rel2.to: "busy_shadow";
+				image.normal: "images/cursor_main.png";
+				map.on: 1;
+				map.smooth: 1;
+				map.rotation.center: "busy_shadow";
+			}
+			description { state: "spin" 0.0;
+				inherit: "default" 0.0;
+				map.rotation.z: 360;
+			}
+		}
+		part { name: "busy_up"; mouse_events: 0;
+			clip_to: "busy_clip";
+			description { state: "default" 0.0;
+				fixed: 1 1;
+				image.normal: "images/cursor_up.png";
+				rel1.to: "busy_shadow";
+				rel2.to: "busy_shadow";
 			}
 		}
 		part {
@@ -560,8 +580,22 @@ group {
 			source: "";
 			action: STATE_SET "default" 0.0;
 			transition: ACCELERATE 1.0;
-			target: "busy";
+			target: "busy_shadow";
+			target: "busy_up";
 			after: "go2"; /* loop */
+		}
+		program { name: "busy_spin";
+			signal: "show"; source: "";
+			action: STATE_SET "spin" 0.0;
+			target: "busy_spinner";
+			transition: LINEAR 1.0;
+			after: "busy_spin2";
+		}
+		program { name: "busy_spin2";
+			action: STATE_SET "default" 0.0;
+			target: "busy_spinner";
+			transition: LINEAR 0.0;
+			after: "busy_spin";
 		}
 		program {
 			name: "stop_busy_clip";

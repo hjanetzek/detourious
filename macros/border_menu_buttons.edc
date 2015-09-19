@@ -90,7 +90,7 @@
 			}															\
 																		\
 			image {														\
-				normal: "actions/"ICON".png";							\
+				normal: "images/actions/"ICON".png";							\
 			}															\
 		}																\
 	}																	\

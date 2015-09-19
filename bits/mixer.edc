@@ -1,7 +1,8 @@
 group { name: "e/modules/mixer/main";
+	
 	images {
 		set {
-			name: "sound";
+			name: "soundmixer";
 			image {
 				image: "images/sound-24x24.png" COMP;
 				size: 0 0 24 24;
@@ -20,7 +21,7 @@ group { name: "e/modules/mixer/main";
 			}
 		}
 		set {
-			name: "sound_0";
+			name: "soundmixer_0";
 			image {
 				image: "images/sound_0-24x24.png" COMP;
 				size: 0 0 24 24;
@@ -39,7 +40,7 @@ group { name: "e/modules/mixer/main";
 			}
 		}
 		set {
-			name: "sound_33";
+			name: "soundmixer_33";
 			image {
 				image: "images/sound_33-24x24.png" COMP;
 				size: 0 0 24 24;
@@ -58,7 +59,7 @@ group { name: "e/modules/mixer/main";
 			}
 		}
 		set {
-			name: "sound_66";
+			name: "soundmixer_66";
 			image {
 				image: "images/sound_66-24x24.png" COMP;
 				size: 0 0 24 24;
@@ -77,7 +78,7 @@ group { name: "e/modules/mixer/main";
 			}
 		}
 		set {
-			name: "sound_99";
+			name: "soundmixer_99";
 			image {
 				image: "images/sound_99-24x24.png" COMP;
 				size: 0 0 24 24;
@@ -96,7 +97,7 @@ group { name: "e/modules/mixer/main";
 			}
 		}
 		set {
-			name: "sound_mute";
+			name: "soundmixer_mute";
 			image {
 				image: "images/sound_mute-24x24.png" COMP;
 				size: 0 0 24 24;
@@ -115,6 +116,8 @@ group { name: "e/modules/mixer/main";
 			}
 		}
 	}
+	
+	
 	script {
 		public message(Msg_Type:type, id, ...) {
 			if ((type == MSG_INT_SET) && (id == 0)) {
@@ -156,14 +159,14 @@ group { name: "e/modules/mixer/main";
 				max: 256 256;
 				aspect: 1 1;
 				aspect_preference: BOTH;
-				image.normal: "sound_mute";
+				image.normal: "soundmixer_mute";
 				color_class: "shelf_secondary_icon";
 				rel1.offset: 2 2;
 				rel2.offset: -3 -3;
 			}
 			description { state: "on" 0.0;
 				inherit: "default" 0.0;
-				image.normal: "sound";
+				image.normal: "soundmixer";
 			}
 		}
 		part { name: "audio";
@@ -174,22 +177,22 @@ group { name: "e/modules/mixer/main";
 				max: 256 256;
 				aspect: 1 1;
 				aspect_preference: BOTH;
-				image.normal: "sound_0";
+				image.normal: "soundmixer_0";
 				color_class: "shelf_secondary_icon";
 				rel1.offset: 2 2;
 				rel2.offset: -3 -3;
 			}
 			description { state: "low" 0.0;
 				inherit: "default" 0.0;
-				image.normal: "sound_33";
+				image.normal: "soundmixer_33";
 			}
 			description { state: "medium" 0.0;
 				inherit: "default" 0.0;
-				image.normal: "sound_66";
+				image.normal: "soundmixer_66";
 			}
 			description { state: "high" 0.0;
 				inherit: "default" 0.0;
-				image.normal: "sound_99";
+				image.normal: "soundmixer_99";
 			}
 		}
 	}

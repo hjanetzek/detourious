@@ -174,7 +174,7 @@ group {
             description {
                 state: "default" 0.0;
                 min: 14 55;
-                max: 14 9999;
+                max: 14 99999;
                 color: 255 255 255 255;
                 rel1 {
                     to: "scrollbar_vbar_base";
@@ -207,7 +207,7 @@ group {
             description {
                 state: "default" 0.0;
                 min: 14 55;
-                max: 14 9999;
+                max: 14 99999;
 				fixed: 1 1;
                 rel1 {
                     to: "scrollbar_vbar_base";
@@ -354,7 +354,7 @@ group {
             description {
                 state: "default" 0.0;
                 min: 55 14;
-                max: 9999 14;
+                max: 99999 14;
                 fixed: 1 1;
                 color: 255 255 255 250;
                 rel1 {
@@ -388,7 +388,7 @@ group {
             description {
                 state: "default" 0.0;
                 min: 36 14;
-                max: 9999 14;
+                max: 99999 14;
                 fixed: 1 1;
                 rel1 {
                     to: "sb_hbar_base";

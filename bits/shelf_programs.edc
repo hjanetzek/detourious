@@ -1,6 +1,6 @@
 program {
-	name: "top";
-	signal: "e,state,orientation,top";
+	name: "bottom";
+	signal: "e,state,orientation,bottom";
 	source: "e";
 	action: STATE_SET "default" 0.0;
 	target: "base";
@@ -8,10 +8,10 @@ program {
 }
 
 program {
-	name: "bottom";
-	signal: "e,state,orientation,bottom";
+	name: "top";
+	signal: "e,state,orientation,top";
 	source: "e";
-	action: STATE_SET "bottom" 0.0;
+	action: STATE_SET "top" 0.0;
 	target: "base";
 	target: "e.swallow.content";
 }

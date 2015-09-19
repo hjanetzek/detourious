@@ -95,6 +95,7 @@ group {
 				}
 				TEXT_COLOR_BOLD;
 				TEXT_TITLE("menu_title", 0.5 0.0, 0 0);
+				text.ellipsis: -1;
 			}
 			description {
 				state: "visible" 0.0;
@@ -494,6 +495,7 @@ group {
 				}
 				TEXT_COLOR;
 				TEXT_NORMAL("menu_item", 0.0 0.5, 1 1);
+				text.ellipsis: -1;
 				color_class: "menu_item";
 			}
 			description {

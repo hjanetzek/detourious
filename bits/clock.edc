@@ -1,187 +1,215 @@
-
-group {
-	name: "e/modules/clock/main";
-	   min: 64 64;
-	/* max: 170 170; */
-
+group { name: "e/modules/clock/main";
+	images.image: "images/clock/clock_bg.png" COMP;		/* base image */
+	images.image: "images/clock/hour_cursor.png" COMP;
+	images.image: "images/clock/hour_cursor_shadow.png" COMP;
+	images.image: "images/clock/minutes_cursor.png" COMP;
+	images.image: "images/clock/minutes_cursor_shadow.png" COMP;
+	images.image: "images/clock/seconds_cursor.png" COMP;
+	images.image: "images/clock/seconds_cursor_shadow.png" COMP;
+	images.image: "images/cpu/tacho_knob.png" COMP;
+	min: 16 16;
+	max: 166 166;
 	script {
-		public clock_cb(val) {
-		new buf[11];
-		new year, month, day, yearday, weekday, hour, minute;
-		new Float:second;
-		new v;
-
-		date(year, month, day, yearday, weekday, hour, minute, second);
-		v = round(second);
-		timer(1.0 - (second - v), "clock_cb", 1);
-		buf[0] = 0; 
-		if (v < 10) {snprintf(buf, 10, "0%i", v);}
-		else {snprintf(buf, 10, "%i", v);}
-		set_state(PART:"seconds", buf, 0.0);
-		v = minute;
-		buf[0] = 0; 
-		if (v < 10) {snprintf(buf, 10, "0%i", v);}
-		else {snprintf(buf, 10, "%i", v);}
-		set_state(PART:"minutes", buf, 0.0);
-		v = ((hour % 12) * 5) + ((minute * 5) / 60);
-		buf[0] = 0; 
-		if (v < 10) {snprintf(buf, 10, "0%i", v);}
-		else {snprintf(buf, 10, "%i", v);}
-		set_state(PART:"hour", buf, 0.0);
+		public do_seconds, tick_timer;
+      
+        public clock_cb(val) {
+            new year, month, day, yearday, weekday, hour, minute;
+            new Float:second;
+            new v, dosec, tim;
+            
+            date(year, month, day, yearday, weekday, hour, minute, second);
+            dosec = get_int(do_seconds);
+            if (dosec) {
+               v = round(second);
+               tim = timer(1.0 - (second - v), "clock_cb", 1);
+               
+               custom_state(PART:"seconds", "default", 0.0);
+               set_state_val(PART:"seconds", STATE_MAP_ROT_Z, (v * 360.0) / 60.0);
+               set_state(PART:"seconds", "custom", 0.0);
+               
+               custom_state(PART:"seconds-sh", "default", 0.0);
+               set_state_val(PART:"seconds-sh", STATE_MAP_ROT_Z, (v * 360.0) / 60.0);
+               set_state(PART:"seconds-sh", "custom", 0.0);
+            }
+            else {
+               tim = timer(60.0 - (second), "clock_cb", 1);
+            }
+            set_int(tick_timer, tim);
+            
+            custom_state(PART:"minutes", "default", 0.0);
+            set_state_val(PART:"minutes", STATE_MAP_ROT_Z, (float(minute) * 360.0) / 60.0);
+            set_state(PART:"minutes", "custom", 0.0);
+            
+            custom_state(PART:"minutes-sh", "default", 0.0);
+            set_state_val(PART:"minutes-sh", STATE_MAP_ROT_Z, (float(minute) * 360.0) / 60.0);
+            set_state(PART:"minutes-sh", "custom", 0.0);
+            
+            custom_state(PART:"hours", "default", 0.0);
+            set_state_val(PART:"hours", STATE_MAP_ROT_Z, ((float(hour) + (float(minute) / 60.0)) * 360.0) / 12.0);
+            set_state(PART:"hours", "custom", 0.0);
+            
+            custom_state(PART:"hours-sh", "default", 0.0);
+            set_state_val(PART:"hours-sh", STATE_MAP_ROT_Z, ((float(hour) + (float(minute) / 60.0)) * 360.0) / 12.0);
+            set_state(PART:"hours-sh", "custom", 0.0);
+         }
+	}
+	parts {   
+		part { name: "event"; type: RECT;
+			description { state: "default" 0.0;
+				color: 0 0 0 0;
+			}
+		}
+		part { name: "base";
+			description { state: "default" 0.0;
+				aspect: 1.0 1.0; aspect_preference: BOTH;
+				image.normal: "images/clock/clock_bg.png";
+			}
+		}
+		part { name: "seconds-sh"; mouse_events: 0;
+			description { state: "default" 0.0;
+				image.normal: "images/clock/seconds_cursor_shadow.png";
+				rel1.to: "hours-sh";
+				rel2.to: "hours-sh";
+				map {
+					on: 1;
+					rotation.center: "seconds-sh";
+				}
+			}
+			description { state: "hidden" 0.0;
+				inherit: "default" 0.0;
+				visible: 0;
+			}
+		}
+		part { name: "seconds"; mouse_events: 0;
+			description { state: "default" 0.0;
+				image.normal: "images/clock/seconds_cursor.png";
+				rel1.to: "base";
+				rel2.to: "base";
+				map {
+					on: 1;
+					rotation.center: "base";
+				}
+			}
+			description { state: "hidden" 0.0;
+				inherit: "default" 0.0;
+				visible: 0;
+			}
+		}
+		part { name: "minutes-sh"; mouse_events: 0;
+			description { state: "default" 0.0;
+				image.normal: "images/clock/minutes_cursor_shadow.png";
+				rel1.to: "hours-sh";
+				rel2.to: "hours-sh";
+				map {
+					on: 1;
+					rotation.center: "minutes-sh";
+				}
+			}
+		}
+		part { name: "minutes"; mouse_events: 0;
+			description { state: "default" 0.0000;
+				image.normal: "images/clock/minutes_cursor.png";
+				rel1.to: "base";
+				rel2.to: "base";
+				map {
+					on: 1;
+					rotation.center: "base";
+				}
+			}
+		}
+		part { name: "hours-sh"; mouse_events: 0;
+			description { state: "default" 0.0;
+				image.normal: "images/clock/hour_cursor_shadow.png";
+				rel1.to: "hours";
+				rel1.relative: 0.0 (5/380);
+				rel1.offset: 0 1;
+				rel2.to: "hours";
+				rel2.relative: 1.0 (385/380);
+				rel2.offset: -1 0;
+				map {
+					on: 1;
+					rotation.center: "hours-sh";
+				}
+			}
+		}
+		part { name: "hours"; mouse_events: 0;
+			description { state: "default" 0.0;
+				image.normal: "images/clock/hour_cursor.png";
+				rel1.to: "base";
+				rel2.to: "base";
+				map {
+					on: 1;
+					rotation.center: "base";
+				}
+			}
+		}
+		part { name: "knob"; type: SPACER;
+			description { state: "default" 0.0;
+				rel1.relative: (140/340) (140/340);
+				rel1.to: "base";
+				rel2.relative: (205/340) (205/340);
+				rel2.to: "base";
+				min: 4 4;
+				step: 2 2;
+				max: 24 24;
+			}
+		}
+		part { name: "knob2";
+			description { state: "default" 0.0;
+				rel1.offset: -4 -4;
+				rel1.to: "knob";
+				rel2.offset: 3 3;
+				rel2.to: "knob";
+				min: 12 12;
+				max: 32 32;
+				image.normal: "images/cpu/tacho_knob.png";
+			}
 		}
 	}
-
-	parts {
-		part {
-			name: "center";
-			type: RECT;
-			mouse_events: 0;
-
-			description {
-				state: "default" 0.0;
-				color: 255 0 0 0;
-
-				rel1 { 
-					offset: 0 0; 
-				}
-
-				rel2 { 
-					offset: -1 -1; 
-				}
-			}
-		}
-
-		part {
-			name: "clock";
-			type: IMAGE;
-
-			description {
-				state: "default" 0.0;
-				image.normal: "clock/clock_bg.png";
-				aspect: 1.0 1.0;
-				aspect_preference: BOTH;
-
-				rel1 { 
-					to: "center"; 
-					relative: 0.1 0.1; 
-				}
-
-				rel2 { 
-					to: "center"; 
-					relative: 0.9 0.9; 
-				}
-			}
-		}
-
-		# ifdef HAND_DESC
-		#  undef HAND_DESC
-		# endif
-		# define HAND_DESC(IND,num) \
-			description { \
-				state: num 0.0; \
-				inherit: "default" 0.0; \
-				image { \
-					normal: "clock/"IND"."cursor"."num".png"; \
-				} \
-			}
-
-		#define HAND_PART(IND, COLOR) \
-		part { \
-			name: IND; \
-			type: IMAGE; \
-			mouse_events: 0; \
-			description { \
-				state: "default" 0.0; \
-				align: 0.5 0.5; \
-				aspect: 1.0 1.0; \
-				aspect_preference: BOTH; \
-				visible: 1; \
-				color: COLOR; \
-				rel1 { \
-					to: "center"; \
-					relative: 0.0 0.0; \
-				} \
-				rel2 { \
-					to: "center"; \
-					relative: 1.0 1.0; \
-				} \
-				image { \
-					normal: "clock/"IND"."cursor".00.png"; \
-				} \
-			} \
-			HAND_DESC(IND,"00") \
-			HAND_DESC(IND,"01") \
-			HAND_DESC(IND,"02") \
-			HAND_DESC(IND,"03") \
-			HAND_DESC(IND,"04") \
-			HAND_DESC(IND,"05") \
-			HAND_DESC(IND,"06") \
-			HAND_DESC(IND,"07") \
-			HAND_DESC(IND,"08") \
-			HAND_DESC(IND,"09") \
-			HAND_DESC(IND,"10") \
-			HAND_DESC(IND,"11") \
-			HAND_DESC(IND,"12") \
-			HAND_DESC(IND,"13") \
-			HAND_DESC(IND,"14") \
-			HAND_DESC(IND,"15") \
-			HAND_DESC(IND,"16") \
-			HAND_DESC(IND,"17") \
-			HAND_DESC(IND,"18") \
-			HAND_DESC(IND,"19") \
-			HAND_DESC(IND,"20") \
-			HAND_DESC(IND,"21") \
-			HAND_DESC(IND,"22") \
-			HAND_DESC(IND,"23") \
-			HAND_DESC(IND,"24") \
-			HAND_DESC(IND,"25") \
-			HAND_DESC(IND,"26") \
-			HAND_DESC(IND,"27") \
-			HAND_DESC(IND,"28") \
-			HAND_DESC(IND,"29") \
-			HAND_DESC(IND,"30") \
-			HAND_DESC(IND,"31") \
-			HAND_DESC(IND,"32") \
-			HAND_DESC(IND,"33") \
-			HAND_DESC(IND,"34") \
-			HAND_DESC(IND,"35") \
-			HAND_DESC(IND,"36") \
-			HAND_DESC(IND,"37") \
-			HAND_DESC(IND,"38") \
-			HAND_DESC(IND,"39") \
-			HAND_DESC(IND,"40") \
-			HAND_DESC(IND,"41") \
-			HAND_DESC(IND,"42") \
-			HAND_DESC(IND,"43") \
-			HAND_DESC(IND,"44") \
-			HAND_DESC(IND,"45") \
-			HAND_DESC(IND,"46") \
-			HAND_DESC(IND,"47") \
-			HAND_DESC(IND,"48") \
-			HAND_DESC(IND,"49") \
-			HAND_DESC(IND,"50") \
-			HAND_DESC(IND,"51") \
-			HAND_DESC(IND,"52") \
-			HAND_DESC(IND,"53") \
-			HAND_DESC(IND,"54") \
-			HAND_DESC(IND,"55") \
-			HAND_DESC(IND,"56") \
-			HAND_DESC(IND,"57") \
-			HAND_DESC(IND,"58") \
-			HAND_DESC(IND,"59") \
-		}
-
-		HAND_PART("seconds", 255 255 255 255)
-		HAND_PART("minutes", 255 255 255 255)
-		HAND_PART("hour", 255 255 255 255)
-	}
-
 	programs {
 		program {
-			name: "init";
-			signal: "load";
-			source: "";
+			signal: "load"; source: "";
 			script {
+				clock_cb(0);
+			}
+		}
+		program {
+			signal: "e,state,seconds,on"; source: "e";
+			action: STATE_SET "default" 0.0;
+			target: "seconds";
+			target: "seconds-sh";
+			after: "sec2";
+		}
+		program { name: "sec2";
+			script {
+				new tim;
+            
+				set_int(do_seconds, 1);
+				tim = get_int(tick_timer);
+				if (tim) {
+					cancel_timer(tim);
+					set_int(tick_timer, 0);
+				}
+				clock_cb(0);
+			}
+		}
+		program {
+			signal: "e,state,seconds,off"; source: "e";
+			action: STATE_SET "hidden" 0.0;
+			target: "seconds";
+			target: "seconds-sh";
+			after: "sec3";
+		}
+		program { name: "sec3";
+			script {
+				new tim;
+            
+				set_int(do_seconds, 0);
+				tim = get_int(tick_timer);
+				if (tim) {
+					cancel_timer(tim);
+					set_int(tick_timer, 0);
+				}
 				clock_cb(0);
 			}
 		}
@@ -191,7 +219,6 @@ group {
 group { name: "e/modules/clock/digital";
 	script {
 		public do_seconds, do_24h, tick_timer, horizontal;
-
 		public clock_cb(val) {
 			new year, month, day, yearday, weekday, hour, minute;
 			new Float:second;
@@ -263,15 +290,6 @@ group { name: "e/modules/clock/digital";
 			}
 			clock_cb(0);
 		}
-
-		public eval_show_date() {
-			new x, y, w, h;
-			get_geometry(PART:"event", x, y, w, h);
-			if ((h >= 32) && ((horizontal) || (w > 90)))
-				run_program(PROGRAM:"today,show");
-			else
-				run_program(PROGRAM:"today,hide");
-		}
 	}
 
 	parts {
@@ -279,6 +297,8 @@ group { name: "e/modules/clock/digital";
 			type: RECT;
 			description { state: "default" 0.0;
 				color: 0 0 0 0;
+				rel1.offset: 2 2;
+				rel2.offset: -3 -3;
 			}
 			description { state: "show-date" 0.0;
 				inherit: "default" 0.0;
@@ -303,7 +323,10 @@ group { name: "e/modules/clock/digital";
 					font: FONT;
 					size: 14;
 					fit: 1 1;
+					min: 1 0;
 					size_range: 9 72;
+					ellipsis: -1;
+					align: 0.5 0.5;
 					text: "--:--";
 				}
 			}
@@ -331,7 +354,7 @@ group { name: "e/modules/clock/digital";
 				color: 0 0 0 198;
 				color3: 255 255 255 30;
 				align: 0.5 1.0;
-				min: 0 8;
+				min: 5 8;
 				max: 9999 30;
 				rel1 {
 					relative: 0.0 0.9;
@@ -346,8 +369,9 @@ group { name: "e/modules/clock/digital";
 					size: 9;
 					fit: 0 1;
 					min: 1 0;
-					size_range: 8 12;
+					size_range: 7 72;
 					align: 0.5 1.0;
+					ellipsis: -1;
 					text: "Tod, 12/30/2011";
 				}
 				visible: 0;
@@ -373,29 +397,25 @@ group { name: "e/modules/clock/digital";
 			source: "";
 			script {
 				clock_cb(0);
-				eval_show_date();
-			}
-		}
-		program { name: "resize";
-			signal: "resize";
-			source: "";
-			script {
-				eval_show_date();
 			}
 		}
 		program { name: "today,show";
-			signal: "today,show";
-			source: "";
-			action: STATE_SET "show-date" 0.0;
-			target: "time-area";
-			target: "e.text.today";
+			signal: "e,state,date,on";
+			source: "e";
+			script {
+            set_state(PART:"time-area", "show-date", 0.0);
+            set_state(PART:"e.text.today", "show-date", 0.0);
+            restart_clock();
+			}
 		}
 		program { name: "today,hide";
-			signal: "today,hide";
-			source: "";
-			action: STATE_SET "default" 0.0;
-			target: "time-area";
-			target: "e.text.today";
+			signal: "e,state,date,off";
+			source: "e";
+			script {
+			set_state(PART:"time-area", "default", 0.0);
+			set_state(PART:"e.text.today", "default", 0.0);
+            restart_clock();
+			}
 		}
 
 		program { name: "secon";
@@ -440,7 +460,6 @@ group { name: "e/modules/clock/digital";
 		program { name: "horizontal-eval";
 			script {
 				set_int(horizontal, 1);
-				eval_show_date();
 			}
 		}
 		program { name: "vertical";
@@ -453,7 +472,6 @@ group { name: "e/modules/clock/digital";
 		program { name: "vertical-eval";
 			script {
 				set_int(horizontal, 0);
-				eval_show_date();
 			}
 		}
 	}
@@ -479,6 +497,7 @@ group { name: "e/modules/clock/digital";
 						size: 8;
 						min: 1 1;
 						text_class: "module_small";
+						ellipsis: -1;
 					}
 				}
 			}
@@ -529,6 +548,7 @@ group { name: "e/modules/clock/digital";
 						size: 9;
 						min: 1 1;
 						text_class: "module_small";
+						ellipsis: -1;
 					}
 				}
 				description { state: "today" 0.0;

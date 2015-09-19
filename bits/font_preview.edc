@@ -19,6 +19,7 @@ group {
 				}
 				TEXT_COLOR;
 				TEXT_NORMAL("_e_font_preview", 0.5 0.5, 1 1);
+				text.ellipsis: -1;
 			}
 		}
 	}

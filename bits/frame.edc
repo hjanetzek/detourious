@@ -68,6 +68,7 @@ group {
                 }
 				TEXT_COLOR_BOLD;
 				TEXT_HEADER("frame", 0.0 0.0, 1 1);
+				text.ellipsis: -1;
             }
         }
     }

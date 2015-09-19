@@ -209,6 +209,7 @@ group {
 				max: 180 24;
 				color: 180 180 180 255;
 				TEXT_NORMAL("label_normal", 0.5 0.5, 1 1);
+				text.ellipsis: -1;
 			}
 			description {
 				state: "selected" 0.0;
